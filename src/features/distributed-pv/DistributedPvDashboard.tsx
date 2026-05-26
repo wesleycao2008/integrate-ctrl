@@ -82,9 +82,9 @@ const DistributedPvDashboard: FC = () => {
   const activeMeta = DASHBOARD_TABS.find((t) => t.id === activeTab)
 
   return (
-    <section className="space-y-4 rounded-2xl border border-[#1e3a5f]/60 bg-[#0f172a]/80 p-4 shadow-lg shadow-black/40">
+    <section className="flex flex-col gap-4 rounded-2xl border border-[#1e3a5f]/60 bg-[#0f172a]/80 p-4 shadow-lg shadow-black/40 flex-1 min-h-0">
       {/* Tab 标题与说明 */}
-      <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <header className="shrink-0 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
           <h2 className="text-sm font-semibold text-slate-50">
             分布式光伏控制指令解聚合
@@ -105,7 +105,7 @@ const DistributedPvDashboard: FC = () => {
       </header>
 
       {/* Tab 切换条 */}
-      <nav className="-mx-1 flex gap-2 overflow-x-auto pb-1 pt-1 text-xs">
+      <nav className="shrink-0 -mx-1 flex gap-2 overflow-x-auto pb-1 pt-1 text-xs">
         {DASHBOARD_TABS.map((tab) => {
           const isActive = tab.id === activeTab
           return (
@@ -126,7 +126,7 @@ const DistributedPvDashboard: FC = () => {
       </nav>
 
       {/* Tab 内容区域：每次仅渲染一个面板 */}
-      <div className="pt-1">
+      <div className="flex-1 min-h-0 overflow-auto pt-1">
         {activeTab === 'aggregation' && <AggregationTrackingPanel />}
         {activeTab === 'weights' && <MultiObjectiveWeightsPanel />}
         {activeTab === 'inverters' && <InverterCommandsPanel />}

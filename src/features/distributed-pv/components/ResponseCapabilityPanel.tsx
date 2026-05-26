@@ -313,8 +313,8 @@ const ResponseCapabilityPanel: FC = () => {
   const [subTab, setSubTab] = useState<SubTabId>('dispatcher')
 
   return (
-    <section className="space-y-4 rounded-2xl border border-[#1e3a5f]/60 bg-[#0f172a]/60 p-4 shadow-lg shadow-black/40">
-      <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+    <section className="flex flex-col gap-4 rounded-2xl border border-[#1e3a5f]/60 bg-[#0f172a]/60 p-4 shadow-lg shadow-black/40 h-full">
+      <header className="shrink-0 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
           <h2 className="text-sm font-semibold text-slate-50">
             低压分布式光伏响应能力评估
@@ -350,7 +350,9 @@ const ResponseCapabilityPanel: FC = () => {
         </div>
       </header>
 
-      {subTab === 'dispatcher' ? <DispatcherView /> : <FeederView />}
+      <div className="flex-1 min-h-0 overflow-auto">
+        {subTab === 'dispatcher' ? <DispatcherView /> : <FeederView />}
+      </div>
     </section>
   )
 }
@@ -384,9 +386,9 @@ const DispatcherView: FC = () => {
   const suggestedTarget = Math.round(totalUpCapacity)
 
   return (
-    <div className="space-y-4">
+    <div className="min-h-full flex flex-col gap-4">
       {/* 上半部分：台区聚合能力列表 + 未来 4 小时能力曲线 */}
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,2.1fr)_minmax(0,3fr)]">
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,2.1fr)_minmax(0,3fr)] shrink-0">
         {/* 台区聚合能力地图 / 列表模式 */}
         <section className="rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
           <header className="mb-2 flex items-center justify-between">
@@ -502,9 +504,9 @@ const DispatcherView: FC = () => {
       </div>
 
       {/* 下半部分：排名与预警 + 下达指令辅助 */}
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,2.2fr)_minmax(0,2.5fr)]">
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,2.2fr)_minmax(0,2.5fr)] flex-1 min-h-0">
         {/* 排名与预警 */}
-        <section className="rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
+        <section className="h-full overflow-auto rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
           <header className="mb-2 flex items-center justify-between">
             <div>
               <h3 className="text-xs font-semibold text-slate-100">台区可增能力排名与预警</h3>
@@ -563,52 +565,50 @@ const DispatcherView: FC = () => {
         </section>
 
         {/* 下达指令辅助 */}
-        <section className="flex flex-col justify-between rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
-          <div>
-            <h3 className="text-xs font-semibold text-slate-100">下达聚合指令辅助检查</h3>
-            <p className="mt-0.5 text-[11px] text-blue-200/60">
-              输入计划目标值，系统自动检查各台区聚合能力是否满足，并在超出能力时给出建议修正值。
-            </p>
+        <section className="flex flex-col h-full rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs overflow-auto">
+          <h3 className="shrink-0 text-xs font-semibold text-slate-100">下达聚合指令辅助检查</h3>
+          <p className="shrink-0 mt-0.5 text-[11px] text-blue-200/60">
+            输入计划目标值，系统自动检查各台区聚合能力是否满足，并在超出能力时给出建议修正值。
+          </p>
 
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              <label className="space-y-1">
-                <span className="text-blue-200/80">计划上调目标 ΔP_up (kW)</span>
-                <input
-                  type="number"
-                  min={0}
-                  value={plannedTarget}
-                  onChange={(e) =>
-                    setPlannedTarget(Number.isNaN(Number.parseFloat(e.target.value)) ? 0 : Number.parseFloat(e.target.value))
-                  }
-                  className="w-full rounded border border-[#1e3a5f]/40 bg-[#0a0e1a] px-2 py-1 text-right text-[11px] text-slate-100"
-                />
-              </label>
-              <div className="space-y-1">
-                <span className="text-blue-200/80">全网总可增能力</span>
-                <div className="rounded-lg border border-[#1e3a5f]/60 bg-[#0f172a] px-2 py-1.5">
-                  <p className="text-[11px] text-slate-100">{totalUpCapacity.toFixed(0)} kW</p>
-                  <p className="mt-0.5 text-[11px] text-blue-400/60">最薄弱台区：{minUpFeeder.name}（{minUpFeeder.upCapacityKw} kW）</p>
-                </div>
+          <div className="shrink-0 mt-3 grid gap-3 sm:grid-cols-2">
+            <label className="space-y-1">
+              <span className="text-blue-200/80">计划上调目标 ΔP_up (kW)</span>
+              <input
+                type="number"
+                min={0}
+                value={plannedTarget}
+                onChange={(e) =>
+                  setPlannedTarget(Number.isNaN(Number.parseFloat(e.target.value)) ? 0 : Number.parseFloat(e.target.value))
+                }
+                className="w-full rounded border border-[#1e3a5f]/40 bg-[#0a0e1a] px-2 py-1 text-right text-[11px] text-slate-100"
+              />
+            </label>
+            <div className="space-y-1">
+              <span className="text-blue-200/80">全网总可增能力</span>
+              <div className="rounded-lg border border-[#1e3a5f]/60 bg-[#0f172a] px-2 py-1.5">
+                <p className="text-[11px] text-slate-100">{totalUpCapacity.toFixed(0)} kW</p>
+                <p className="mt-0.5 text-[11px] text-blue-400/60">最薄弱台区：{minUpFeeder.name}（{minUpFeeder.upCapacityKw} kW）</p>
               </div>
             </div>
-
-            <div className="mt-3 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2.5 text-[11px]">
-              {!isTargetExceeded ? (
-                <p className="text-emerald-200">计划目标在当前全网可增能力范围内，可下达聚合指令。建议关注台区 {minUpFeeder.name} 的运行裕度。</p>
-              ) : (
-                <div className="space-y-1 text-amber-100">
-                  <p>目标 {plannedTarget.toFixed(0)} kW 超出当前全网总可调上限 {totalUpCapacity.toFixed(0)} kW。</p>
-                  <p>建议将目标修正为 ≤ <span className="font-semibold">{suggestedTarget.toFixed(0)} kW</span>，或对下列台区进行容量优化：</p>
-                  <ul className="ml-4 list-disc space-y-0.5">
-                    {ranking.slice(0, 3).map((r) => (
-                      <li key={r.name}>{r.name}（当前可增 {r.upCapacityKw} kW）</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
           </div>
-          <p className="mt-3 text-[11px] leading-relaxed text-blue-200/60">
+
+          <div className="flex-1 min-h-0 mt-3 overflow-auto rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2.5 text-[11px]">
+            {!isTargetExceeded ? (
+              <p className="text-emerald-200">计划目标在当前全网可增能力范围内，可下达聚合指令。建议关注台区 {minUpFeeder.name} 的运行裕度。</p>
+            ) : (
+              <div className="space-y-1 text-amber-100">
+                <p>目标 {plannedTarget.toFixed(0)} kW 超出当前全网总可调上限 {totalUpCapacity.toFixed(0)} kW。</p>
+                <p>建议将目标修正为 ≤ <span className="font-semibold">{suggestedTarget.toFixed(0)} kW</span>，或对下列台区进行容量优化：</p>
+                <ul className="ml-4 list-disc space-y-0.5">
+                  {ranking.slice(0, 3).map((r) => (
+                    <li key={r.name}>{r.name}（当前可增 {r.upCapacityKw} kW）</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <p className="shrink-0 mt-3 text-[11px] leading-relaxed text-blue-200/60">
             说明：辅助检查仅基于当前预测可调能力，未考虑后续时段的约束与运行风险。正式下达指令前，建议结合计划曲线与调峰需求做进一步校核。
           </p>
         </section>
@@ -673,9 +673,9 @@ const FeederView: FC = () => {
   }
 
   return (
-    <div className="space-y-4 h-full">
+    <div className="min-h-full flex flex-col gap-4">
       {/* 上半部分：拓扑热力图 + 逆变器能力列表 */}
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] shrink-0">
         {/* 台区单线拓扑与热力图 */}
         <section className="rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
           <header className="mb-2 flex items-center justify-between">
@@ -877,7 +877,7 @@ const FeederView: FC = () => {
       </div>
 
       {/* 下半部分：等值机组 + 历史趋势 + 不确定性 & 重新评估 */}
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,2.1fr)_minmax(0,3fr)]">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,2.1fr)_minmax(0,3fr)] flex-1 min-h-0">
         {/* 等值机组分组可视化 */}
         <section className="rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
           <h3 className="text-xs font-semibold text-slate-100">等值机组分组可视化</h3>
