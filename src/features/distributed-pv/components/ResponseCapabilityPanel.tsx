@@ -673,12 +673,12 @@ const FeederView: FC = () => {
   }
 
   return (
-    <div className="min-h-full flex flex-col gap-4">
+    <div className="h-full grid grid-rows-[minmax(0,0.38fr)_minmax(0,1fr)] gap-4">
       {/* 上半部分：拓扑热力图 + 逆变器能力列表 */}
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] shrink-0">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] min-h-0 overflow-hidden">
         {/* 台区单线拓扑与热力图 */}
-        <section className="rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
-          <header className="mb-2 flex items-center justify-between">
+        <section className="h-full flex flex-col rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs overflow-hidden">
+          <header className="shrink-0 mb-2 flex items-center justify-between">
             <div>
               <h3 className="text-xs font-semibold text-slate-100">台区单线图与可调能力热力图</h3>
               <p className="mt-0.5 text-[11px] text-blue-200/60">
@@ -693,9 +693,9 @@ const FeederView: FC = () => {
               {showReactive ? '隐藏无功能力' : '显示无功能力'}
             </button>
           </header>
-          <div className="flex flex-col gap-3 md:flex-row">
+          <div className="flex-1 min-h-0 flex flex-col gap-3 md:flex-row overflow-hidden">
             {/* 简化单线拓扑，使用圆点表示节点 */}
-            <div className="flex-1 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/90 p-3">
+            <div className="flex-1 min-h-0 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/90 p-3 overflow-auto">
               <div className="mb-2 text-[11px] text-blue-200/60">
                 悬停查看节点 P_cur / P_avail / ΔP_up / ΔP_down，点击可在逆变器表中选中。
               </div>
@@ -730,7 +730,7 @@ const FeederView: FC = () => {
               </div>
             </div>
             {/* 选中节点详情 */}
-            <div className="w-full max-w-xs rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/90 p-3 text-[11px]">
+            <div className="w-full max-w-xs min-h-0 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/90 p-3 text-[11px] overflow-auto">
               <h4 className="mb-1 font-medium text-slate-100">节点详情</h4>
               {selectedInverter ? (
                 <dl className="space-y-1.5 text-blue-100/90">
@@ -779,8 +779,8 @@ const FeederView: FC = () => {
         </section>
 
         {/* 逆变器能力列表与筛选 */}
-        <section className="rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs h-full flex flex-col">
-          <header className="mb-2 flex flex-wrap items-center justify-between gap-2">
+        <section className="h-full flex flex-col rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs overflow-hidden">
+          <header className="shrink-0 mb-2 flex flex-wrap items-center justify-between gap-2">
             <div>
               <h3 className="text-xs font-semibold text-slate-100">逆变器能力列表与筛选</h3>
               <p className="mt-0.5 text-[11px] text-blue-200/60">
@@ -822,7 +822,7 @@ const FeederView: FC = () => {
               </button>
             </div>
           </header>
-          <div className="h-full min-h-0 overflow-auto rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80">
+          <div className="flex-1 min-h-0 overflow-auto rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80">
             <table className="min-w-full border-separate border-spacing-0 text-[11px]">
               <thead className="sticky top-0 bg-[#0f172a]">
                 <tr>
@@ -877,12 +877,12 @@ const FeederView: FC = () => {
       </div>
 
       {/* 下半部分：等值机组 + 历史趋势 + 不确定性 & 重新评估 */}
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,2.1fr)_minmax(0,3fr)] flex-1 min-h-0">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,2.1fr)_minmax(0,3fr)] min-h-0 overflow-hidden">
         {/* 等值机组分组可视化 */}
-        <section className="rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
-          <h3 className="text-xs font-semibold text-slate-100">等值机组分组可视化</h3>
-          <p className="mt-0.5 text-[11px] text-blue-200/60">通过等值机组聚类查看逆变器分组与总调节能力，点击机组可展开成员列表。</p>
-          <div className="mt-2 space-y-2">
+        <section className="h-full flex flex-col rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs overflow-hidden">
+          <h3 className="shrink-0 text-xs font-semibold text-slate-100">等值机组分组可视化</h3>
+          <p className="shrink-0 mt-0.5 text-[11px] text-blue-200/60">通过等值机组聚类查看逆变器分组与总调节能力，点击机组可展开成员列表。</p>
+          <div className="flex-1 min-h-0 mt-2 space-y-2 overflow-auto">
             {groups.map((g) => {
               const isExpanded = expandedGroupId === g.id
               const total = g.totalUp + g.totalDown
@@ -918,13 +918,13 @@ const FeederView: FC = () => {
         </section>
 
         {/* 历史趋势 + 不确定性 + 重新评估 */}
-        <section className="space-y-3 rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs">
+        <section className="h-full flex flex-col rounded-xl border border-[#1e3a5f]/60 bg-[#0a0e1a]/70 p-3 text-xs overflow-hidden">
           {/* 历史响应趋势 */}
-          <div>
-            <h3 className="text-xs font-semibold text-slate-100">响应性能历史趋势（过去 24 小时）</h3>
-            <p className="mt-0.5 text-[11px] text-blue-200/60">折线图展示台区整体响应精度与平均延迟，直方图展示指令误差分布，可用于对比不同设备的响应质量。</p>
-            <div className="mt-2 grid gap-3 md:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)]">
-              <div className="h-40 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2">
+          <div className="flex-[1.2] min-h-0 flex flex-col">
+            <h3 className="shrink-0 text-xs font-semibold text-slate-100">响应性能历史趋势（过去 24 小时）</h3>
+            <p className="shrink-0 mt-0.5 text-[11px] text-blue-200/60">折线图展示台区整体响应精度与平均延迟，直方图展示指令误差分布，可用于对比不同设备的响应质量。</p>
+            <div className="flex-1 min-h-0 mt-2 grid gap-3 md:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)] grid-rows-[minmax(0,1fr)]">
+              <div className="min-h-0 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={historySeries} margin={{ top: 10, left: 0, right: 20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
@@ -969,7 +969,7 @@ const FeederView: FC = () => {
                   </LineChart>
                 </ResponsiveContainer>
               </div>
-              <div className="h-40 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2">
+              <div className="min-h-0 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={errorDist} margin={{ top: 10, left: 0, right: 10, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
@@ -984,38 +984,40 @@ const FeederView: FC = () => {
           </div>
 
           {/* 不确定性分析与预测 + 手动评估触发 */}
-          <div className="grid gap-3 md:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)]">
-            <div className="h-40 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2">
-              <h4 className="mb-1 text-xs font-medium text-slate-100">未来 1 小时可增能力不确定性分析</h4>
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={uncertainty} margin={{ top: 10, left: 0, right: 10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
-                  <XAxis dataKey="valueKw" stroke="#64748b" fontSize={11} label={{ value: 'ΔP_up (kW)', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 10 }} />
-                  <YAxis stroke="#64748b" fontSize={11} label={{ value: '相对概率', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }} />
-                  <Tooltip contentStyle={{ backgroundColor: '#020617', borderColor: '#1e3a5f', borderRadius: 8, fontSize: 11 }} />
-                  <Area type="monotone" dataKey="probability" stroke="#a855f7" fill="#a855f7" fillOpacity={0.3} name="概率密度" />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="flex flex-col justify-between rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-3 text-[11px]">
-              <div>
-                <h4 className="mb-1 text-xs font-medium text-slate-100">不确定性来源说明</h4>
-                <ul className="list-disc space-y-1 pl-4 text-blue-200/80">
-                  <li>辐照度与气象预测误差导致光伏可用能力波动。</li>
-                  <li>终端通信时延与丢包造成指令执行反馈抖动。</li>
-                  <li>部分逆变器长期不响应或限功运行，等值能力降低。</li>
-                </ul>
+          <div className="flex-1 min-h-0 mt-3 flex flex-col">
+            <div className="flex-1 min-h-0 grid gap-3 md:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)] grid-rows-[minmax(0,1fr)]">
+              <div className="min-h-0 rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-2">
+                <h4 className="mb-1 text-xs font-medium text-slate-100">未来 1 小时可增能力不确定性分析</h4>
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={uncertainty} margin={{ top: 10, left: 0, right: 10, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e3a5f" />
+                    <XAxis dataKey="valueKw" stroke="#64748b" fontSize={11} label={{ value: 'ΔP_up (kW)', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 10 }} />
+                    <YAxis stroke="#64748b" fontSize={11} label={{ value: '相对概率', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }} />
+                    <Tooltip contentStyle={{ backgroundColor: '#020617', borderColor: '#1e3a5f', borderRadius: 8, fontSize: 11 }} />
+                    <Area type="monotone" dataKey="probability" stroke="#a855f7" fill="#a855f7" fillOpacity={0.3} name="概率密度" />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
-              <div className="mt-3 rounded-md border border-[#1e3a5f]/60 bg-[#0a0e1a] px-2.5 py-2 text-blue-200/60">
-                <p>
-                  当前估计 1 小时内 ΔP_up 的 10%~90% 分位区间约为图中主峰附近区域，建议在制定精细控制计划时预留安全裕度。
-                </p>
-              </div>
-              <div className="mt-3 flex items-center justify-between text-blue-200/60">
-                <span>上次评估：{lastEvalAt}（耗时 {lastDurationMs} ms）</span>
-                <button type="button" onClick={triggerReEval} className="rounded-full border border-emerald-500/70 bg-emerald-500/15 px-3 py-1 text-[11px] text-emerald-200 hover:bg-emerald-500/25">
-                  立即重新评估
-                </button>
+              <div className="min-h-0 flex flex-col justify-between rounded-lg border border-[#1e3a5f]/60 bg-[#0a0e1a]/80 p-3 text-[11px] overflow-auto">
+                <div className="shrink-0">
+                  <h4 className="mb-1 text-xs font-medium text-slate-100">不确定性来源说明</h4>
+                  <ul className="list-disc space-y-1 pl-4 text-blue-200/80">
+                    <li>辐照度与气象预测误差导致光伏可用能力波动。</li>
+                    <li>终端通信时延与丢包造成指令执行反馈抖动。</li>
+                    <li>部分逆变器长期不响应或限功运行，等值能力降低。</li>
+                  </ul>
+                </div>
+                <div className="shrink-0 mt-3 rounded-md border border-[#1e3a5f]/60 bg-[#0a0e1a] px-2.5 py-2 text-blue-200/60">
+                  <p>
+                    当前估计 1 小时内 ΔP_up 的 10%~90% 分位区间约为图中主峰附近区域，建议在制定精细控制计划时预留安全裕度。
+                  </p>
+                </div>
+                <div className="shrink-0 mt-3 flex items-center justify-between text-blue-200/60">
+                  <span>上次评估：{lastEvalAt}（耗时 {lastDurationMs} ms）</span>
+                  <button type="button" onClick={triggerReEval} className="rounded-full border border-emerald-500/70 bg-emerald-500/15 px-3 py-1 text-[11px] text-emerald-200 hover:bg-emerald-500/25">
+                    立即重新评估
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1025,4 +1027,5 @@ const FeederView: FC = () => {
   )
 }
 
+export { DispatcherView, FeederView }
 export default ResponseCapabilityPanel

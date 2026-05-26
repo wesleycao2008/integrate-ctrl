@@ -10,7 +10,7 @@ import MultiObjectiveWeightsPanel from './components/MultiObjectiveWeightsPanel'
 import InverterCommandsPanel from './components/InverterCommandsPanel'
 import LSTMCorrectionPanel from './components/LSTMCorrectionPanel'
 import CommandDispatchStatusPanel from './components/CommandDispatchStatusPanel'
-import ResponseCapabilityPanel from './components/ResponseCapabilityPanel'
+import { DispatcherView, FeederView } from './components/ResponseCapabilityPanel'
 
 /**
  * Tab 标识类型。
@@ -21,7 +21,8 @@ type TabId =
   | 'inverters'
   | 'lstm'
   | 'dispatch'
-  | 'response'
+  | 'responseDispatcher'
+  | 'responseFeeder'
 
 /**
  * 单个 Tab 元数据。
@@ -65,10 +66,16 @@ const DASHBOARD_TABS: DashboardTab[] = [
     description: '下发成功率、通信延迟、执行时间轴与异常列表。',
   },
   {
-    id: 'response',
-    label: '响应能力评估',
+    id: 'responseDispatcher',
+    label: '响应能力评估 - 配网调度员视图',
     description:
-      '低压分布式光伏功率控制响应能力在线评估（调度员 / 运维视图）。',
+      '从配网调度视角评估各台区实时可调能力与聚合指令下达支撑。',
+  },
+  {
+    id: 'responseFeeder',
+    label: '响应能力评估 - 台区运维人员视图',
+    description:
+      '从台区运维视角评估逆变器可调能力与历史响应性能。',
   },
 ]
 
@@ -132,7 +139,8 @@ const DistributedPvDashboard: FC = () => {
         {activeTab === 'inverters' && <InverterCommandsPanel />}
         {activeTab === 'lstm' && <LSTMCorrectionPanel />}
         {activeTab === 'dispatch' && <CommandDispatchStatusPanel />}
-        {activeTab === 'response' && <ResponseCapabilityPanel />}
+        {activeTab === 'responseDispatcher' && <DispatcherView />}
+        {activeTab === 'responseFeeder' && <FeederView />}
       </div>
     </section>
   )
