@@ -494,9 +494,9 @@ const DispatcherView: FC = () => {
                 />
                 <Legend wrapperStyle={{ fontSize: 11 }} />
                 <Area yAxisId="power" type="monotone" dataKey="band" stroke="none" fill="#64748b" fillOpacity={0.15} name="不确定性区间" />
-                <Line yAxisId="power" type="monotone" dataKey="upMax" stroke="#22c55e" strokeWidth={2.5} dot={{ r: 3 }} name="最大上调能力" />
-                <Line yAxisId="power" type="monotone" dataKey="downMax" stroke="#fb7185" strokeWidth={2.5} dot={{ r: 3 }} name="最大下调能力" />
-                <Line yAxisId="power" type="monotone" dataKey="actual" stroke="#38bdf8" strokeWidth={2} dot={{ r: 3 }} name="当前实际出力" />
+                <Line yAxisId="power" type="monotone" dataKey="upMax" stroke="#22c55e" strokeWidth={2.5} dot={false} name="最大上调能力" />
+                <Line yAxisId="power" type="monotone" dataKey="downMax" stroke="#fb7185" strokeWidth={2.5} dot={false} name="最大下调能力" />
+                <Line yAxisId="power" type="monotone" dataKey="actual" stroke="#38bdf8" strokeWidth={2} dot={false} name="当前实际出力" />
               </ComposedChart>
             </ResponsiveContainer>
           </div>

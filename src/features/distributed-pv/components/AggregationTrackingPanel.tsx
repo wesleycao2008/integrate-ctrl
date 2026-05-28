@@ -115,9 +115,6 @@ const useErrorMetrics = (data: AggregationPoint[]) => {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload || !payload.length) return null
 
-  const upper = payload.find((p: any) => p.dataKey === 'upper')?.value
-  const lower = payload.find((p: any) => p.dataKey === 'lower')?.value
-
   return (
     <div
       className="rounded-lg border border-[#1e3a5f]/60 p-2 text-[11px]"
@@ -125,12 +122,12 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     >
       <p className="mb-1 font-medium text-blue-100/90">{label}</p>
       {payload.map((entry: any, index: number) => {
-        if (entry.dataKey === 'lower') return null
-        if (entry.dataKey === 'upper') {
+        if (entry.dataKey === 'domain') {
+          const [dLower, dUpper] = Array.isArray(entry.value) ? entry.value : [entry.value, entry.value]
           return (
             <p key={index} className="text-blue-200/60">
               可行运行域：
-              <span className="text-blue-100/90">{lower ?? '-'} ~ {upper ?? '-'}</span>
+              <span className="text-blue-100/90">{dLower} ~ {dUpper}</span>
             </p>
           )
         }

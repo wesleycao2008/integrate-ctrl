@@ -86,29 +86,15 @@ const DASHBOARD_TABS: DashboardTab[] = [
 const DistributedPvDashboard: FC = () => {
   const [activeTab, setActiveTab] = useState<TabId>('aggregation')
 
-  const activeMeta = DASHBOARD_TABS.find((t) => t.id === activeTab)
-
   return (
     <section className="flex flex-col gap-4 rounded-2xl border border-[#1e3a5f]/60 bg-[#0f172a]/80 p-4 shadow-lg shadow-black/40 flex-1 min-h-0">
       {/* Tab 标题与说明 */}
-      <header className="shrink-0 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-        <div className="space-y-1">
-          <h2 className="text-sm font-semibold text-slate-50">
-            分布式光伏控制指令解聚合
+      <header className="shrink-0 flex flex-col items-center justify-center gap-2 text-center">
+        <div className="w-full space-y-1">
+          <h2 className="text-center text-lg font-semibold text-slate-50">
+            低压分布式光伏聚合响应能力在线评估与提升系统
           </h2>
-          <p className="text-xs text-blue-200/60">
-            通过选项卡切换查看聚合目标跟踪、多目标权重、逆变器指令、LSTM 修正、指令下发执行状态及响应能力评估。
-          </p>
         </div>
-        {activeMeta && (
-          <div className="mt-1 rounded-full bg-[#0f172a]/80 px-3 py-1 text-[11px] text-blue-200/80 md:mt-0">
-            当前视图：
-            <span className="text-cyan-300">{activeMeta.label}</span>
-            <span className="ml-1 text-blue-400/60">
-              — {activeMeta.description}
-            </span>
-          </div>
-        )}
       </header>
 
       {/* Tab 切换条 */}
